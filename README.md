@@ -12,7 +12,7 @@ You may be disappointed from this. Do you imagine that cuckoo spit out some aler
 
 Sorry.
 
-May be later. But, not now.
+*Umm, May be later*. But, not now.
 
 This is do with swizzle and make UIAlertController with presentViewController seems to old UIAlertView.
 
