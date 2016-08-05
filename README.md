@@ -25,65 +25,76 @@ This is do with swizzle and make UIAlertController with presentViewController se
 ## Installation
 
 #### CocoaPods
-You can use [CocoaPods](http://cocoapods.org/) to install `YourLibrary` by adding it to your `Podfile`:
+You can use [CocoaPods](http://cocoapods.org/) to install `CuckooAlert` by adding it to your `Podfile`:
 
 ```ruby
-platform :ios, '8.0'
+platform :ios, '8.4'
 use_frameworks!
-pod 'YourLibrary'
+pod 'CuckooAlert'
 ```
 
-To get the full benefits import `YourLibrary` wherever you import UIKit
+To get the full benefits import `CuckooAlert` wherever you import UIKit
 
 ``` swift
 import UIKit
-import YourLibrary
+import CuckooAlert
 ```
 #### Carthage
-Create a `Cartfile` that lists the framework and run `carthage update`. Follow the [instructions](https://github.com/Carthage/Carthage#if-youre-building-for-ios) to add `$(SRCROOT)/Carthage/Build/iOS/YourLibrary.framework` to an iOS project.
+Create a `Cartfile` that lists the framework and run `carthage update`. Follow the [instructions](https://github.com/Carthage/Carthage#if-youre-building-for-ios) to add `$(SRCROOT)/Carthage/Build/iOS/CuckooAlert.framework` to an iOS project.
 
 ```
-github "yourUsername/yourlibrary"
+github "singcodes/CuckooAlert"
 ```
 #### Manually
-1. Download and drop ```YourLibrary.swift``` in your project.  
+1. Download and drop ```CuckooAlert.swift``` in your project.  
 2. Congratulations!  
 
 ## Usage example
 
+**Swift**
+
 ```swift
-import EZSwiftExtensions
-ez.detectScreenShot { () -> () in
-    print("User took a screen shot")
+import CuckooAlert
+
+in AppDeleaget launching
+
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        CuckooAlert.registCuckooAlert()
+        return true
+}
+
+```
+
+**ObjC**
+
+```objc
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [CuckooAlert registCuckooAlert];
+    return YES;
 }
 ```
 
-## Release History
+and just use presentViewController with UIAlertController
 
-* 0.2.1
-    * CHANGE: Update docs (module code remains unchanged)
-* 0.2.0
-    * CHANGE: Remove `setDefaultXYZ()`
-    * ADD: Add `init()`
-* 0.1.1
-    * FIX: Crash when calling `baz()` (Thanks @GenerousContributorName!)
-* 0.1.0
-    * The first proper release
-    * CHANGE: Rename `foo()` to `bar()`
+no more error with presenting multiple alert controller.
+
+seeing *Example*, *ExampleObjc* targets on CuckooAlert projects
+
+## Release History
 * 0.0.1
     * Work in progress
 
 ## Contribute
 
-We would love for you to contribute to **YourLibraryName**, check the ``LICENSE`` file for more info.
+I would love for you to contribute or modifying or copy and anything to **CuckooAlert**, check the ``LICENSE`` file for more info.
 
 ## Meta
 
-Your Name – [@YourTwitter](https://twitter.com/dbader_org) – YourEmail@example.com
+singcodes – [@KwanghoonChoi](https://twitter.com/KwanghoonChoi) – eyerama@gmail.com
 
-Distributed under the XYZ license. See ``LICENSE`` for more information.
+Distributed under the BSD(3-clause) license. See ``LICENSE`` for more information.
 
-[https://github.com/yourname/github-link](https://github.com/dbader/)
+[https://github.com/singcodes](https://github.com/singcodes/)
 
 [swift-image]:https://img.shields.io/badge/swift-2.2-orange.svg
 [swift-url]: https://swift.org/
