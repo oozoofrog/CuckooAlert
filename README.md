@@ -1,6 +1,6 @@
 
 # CuckooAlert
-> Make UIAlertController using continusously with method swizzle.
+> Allow multiple use of presentViewController to UIAlertController.
 
 [![Swift Version][swift-image]][swift-url]
 [![Build Status][travis-image]][travis-url]
@@ -14,7 +14,7 @@ Sorry.
 
 *Umm, May be later*. But, not now.
 
-This is do with swizzle and make UIAlertController with presentViewController seems to old UIAlertView.
+This is some codes with swizzle for make UIAlertController multiple using of presentViewController. 
 
 
 ## Requirements
