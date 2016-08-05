@@ -63,6 +63,29 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
         return true
 }
 
+in ViewController
+
+        var alert = UIAlertController(title: "title", message: "message", preferredStyle: .Alert)
+        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        alert.addAction(cancel)
+        // present first alert controller
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+        alert = UIAlertController(title: "title2", message: "message2", preferredStyle: .Alert)
+        alert.addAction(cancel)
+        // present second alert controller
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+        if let vc = self.storyboard?.instantiateViewControllerWithIdentifier("2") {
+            // This will be ignored with some Warning:
+            self.presentViewController(vc, animated: true, completion: nil)
+        }
+        
+        alert = UIAlertController(title: "title3", message: "message3", preferredStyle: .Alert)
+        alert.addAction(cancel)
+        // present third alert controller
+        self.presentViewController(alert, animated: true, completion: nil)
+
 ```
 
 **ObjC**
@@ -72,11 +95,27 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     [CuckooAlert registCuckooAlert];
     return YES;
 }
+
+in ViewController
+
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"title" message:@"message" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:cancel];
+    // present first alert controller
+    [alert showWithParentViewController:self animated:true completion:nil];
+    alert = [UIAlertController alertControllerWithTitle:@"title2" message:@"message2" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:cancel];
+    // present second alert controller
+    [alert showWithParentViewController:self animated:true completion:nil];
+    
+    // This will be ignored with some Warning:
+    [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"2"] animated:YES completion:nil];
+    
+    alert = [UIAlertController alertControllerWithTitle:@"title3" message:@"message3" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:cancel];
+    [alert showWithParentViewController:self animated:true completion:nil];
 ```
 
-and just use presentViewController with UIAlertController
-
-no more error with presenting multiple alert controller.
 
 seeing *Example*, *ExampleObjc* targets on CuckooAlert projects
 
