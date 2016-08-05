@@ -8,21 +8,18 @@
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/EZSwiftExtensions.svg)](https://img.shields.io/cocoapods/v/LFAlertController.svg)  
 [![Platform](https://img.shields.io/cocoapods/p/LFAlertController.svg?style=flat)](http://cocoapods.org/pods/LFAlertController)
 
-One to two paragraph statement about your product and what it does.
+You may be disappointed from this. Do you imagine that cuckoo spit out some alerts with beatiful animation?
 
-![](header.png)
+Sorry.
 
-## Features
+May be later. But, not now.
 
-- [x] Feature 1
-- [x] Feature 2
-- [x] Feature 3
-- [x] Feature 4
-- [x] Feature 5
+This is do with swizzle and make UIAlertController with presentViewController seems to old UIAlertView.
+
 
 ## Requirements
 
-- iOS 8.0+
+- iOS 8.4+
 - Xcode 7.3
 
 ## Installation
