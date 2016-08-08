@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CuckooAlert
 
 class ViewController: UIViewController {
 
@@ -38,6 +39,8 @@ class ViewController: UIViewController {
         alert = UIAlertController(title: "title3", message: "message3", preferredStyle: .Alert)
         alert.addAction(cancel)
         self.presentViewController(alert, animated: true, completion: nil)
+        
+        self.prompt("HI~", autoclosing: 0.25)
     }
 
     override func didReceiveMemoryWarning() {

@@ -120,6 +120,9 @@ in ViewController
 seeing *Example*, *ExampleObjc* targets on CuckooAlert projects
 
 ## Release History
+* 1.0.1
+	 * add prompt function to UIViewController
+	 * removing some debugging print
 * 1.0.0
     * add CuckooAlert.swift
     * add CuckooAlert class for enabling swizzles

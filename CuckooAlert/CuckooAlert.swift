@@ -50,6 +50,7 @@ struct UIAlertControllerQueue {
 // MARK: - UIAlertController: resume next alert controller on removing from parent view controller
 extension UIAlertController {
     private static var alertQueue = [UIAlertControllerQueue]()
+//    private static let presentQueue = dispatch_queue_create("com.CuckooAlert.present", DISPATCH_QUEUE_SERIAL)
     
     public override func viewDidDisappear(animated: Bool) {
         print(#function)
@@ -65,7 +66,9 @@ extension UIAlertController {
     }
     
     public func show(parentViewController vc: UIViewController, animated: Bool = true, completion: (()->Void)? = nil) {
-        vc.presentViewController(self, animated: animated, completion: completion)
+        dispatch_async(dispatch_get_main_queue()) {
+            vc.presentViewController(self, animated: animated, completion: completion)
+        }
     }
 }
 
@@ -76,7 +79,6 @@ extension UIViewController {
      This is will be viewDidLoad like cuckoo
      */
     @objc private func newViewDidLoad() {
-        print(#function + " \(String(self))")
         self.someRemainsForOldViewDidLoad()
     }
     
@@ -95,7 +97,6 @@ extension UIViewController {
      - parameter completion:
      */
     @objc public func newPresentViewController(viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
-        print(#function)
         switch viewControllerToPresent {
         case let alert as UIAlertController where nil != self.presentedViewController:
             UIAlertController.alertQueue = [UIAlertControllerQueue(target: self, alert: alert)] + UIAlertController.alertQueue
@@ -109,7 +110,24 @@ extension UIViewController {
     @objc public func oldPresentViewController(viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
         assertionFailure(#function)
     }
-  
+    
+    /**
+     prompt to navigation bar
+     
+     - parameter message:     prompt message
+     - parameter autoclosing: time limit for removing prompt, 0 is infinite prompt
+     */
+    public func prompt(message: String, autoclosing: NSTimeInterval = 0) {
+        self.navigationItem.prompt = message
+        if 0 < autoclosing {
+            weak var weakNavigationItem: UINavigationItem? = self.navigationItem
+            // minimum delay to 0.5 sec. more little value do not animation.
+            let delay = max(0.5, autoclosing)
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+                weakNavigationItem?.prompt = nil
+            })
+        }
+    }
 }
 
 /**
