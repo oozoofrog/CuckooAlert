@@ -1,3 +1,12 @@
 language: objective-c
 osx_image: xcode7.3
 xcode_project: CuckooAlert.xcodeproj
+deploy:
+  provider: releases
+  api_key:
+    secure: Yj0sJG1EI5/Ao2d6VFoqEHpjCDEQfwyB6y3AjLccImoRjza8/3nyfP1p/P0r1Bup9feh55Q6wDR41RdN2t23h2eyWkDJvfW8a7bkbjrmfHeYMx+aqSxWOESbHdqGL3KtDqVS6dtzzbK/UfeHIwwmbFf5WGPR0uEThbVayXKQ743xphgrn3jWi5SXxBm42gn2XAq19OLxY2ukOZtfYKALml/R4/EI0TBmidXm4UZaE1TYZZhDyPNdk4dFUCUmJcPoZvhwzqAB84ACrrRrSAg0lJLBeRAUN1JijT5PvtSrq0Vg9RApINGOtM2iCjaSH/0epSjvZz0gJK++ysGwj+12LXlpHkhI2KJ0CkY7K6mO6g/TsmcgRhc7z76J81vbYBg43eo21v3WzPa8sKi+FHImvknWPQaZxZ5lVOsNAJVvYP0L5EB67y4CaSAAMAbPFdThxleccWDBKeu0ezZzstWiWjaTI06VBzjFpU/m/A7XhxtoMsyxawUOtg7m07Qqh+FV1xSe7JrniH9MydXV/XqBgytQcs1MC1qSwJxDHrbB0me8O+Sp4psBAAQpFbqgaPG2AKP44uR9256FDoeF1dPVq0K2OI9VoSnqQogc/kb/2558P6xyNNyaR/tuvISH95tcF+vMZn+CLrlwlBR8fOaESazvouyl6ECPgxA5hVMXrFk=
+  file: CuckooAlert.framework.zip
+  skip_cleanup: true
+  on:
+    repo: singcodes/CuckooAlert
+    tags: true
