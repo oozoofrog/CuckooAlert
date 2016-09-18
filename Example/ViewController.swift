@@ -15,30 +15,30 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.view.backgroundColor = UIColor.redColor()
+        self.view.backgroundColor = UIColor.red
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         
-        var alert = UIAlertController(title: "title", message: "message", preferredStyle: .Alert)
-        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        var alert = UIAlertController(title: "title", message: "message", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancel)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
         
-        alert = UIAlertController(title: "title2", message: "message2", preferredStyle: .Alert)
+        alert = UIAlertController(title: "title2", message: "message2", preferredStyle: .alert)
         alert.addAction(cancel)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
         
-        if let vc = self.storyboard?.instantiateViewControllerWithIdentifier("2") {
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "2") {
             // This will be ignored with some Warning:
-            self.presentViewController(vc, animated: true, completion: nil)
+            self.present(vc, animated: true, completion: nil)
         }
         
-        alert = UIAlertController(title: "title3", message: "message3", preferredStyle: .Alert)
+        alert = UIAlertController(title: "title3", message: "message3", preferredStyle: .alert)
         alert.addAction(cancel)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
         
         self.prompt("HI~", autoclosing: 0.25)
     }

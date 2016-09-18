@@ -8,17 +8,17 @@
 
 import UIKit
 
-@objc public class CuckooAlert: NSObject {
+@objc open class CuckooAlert: NSObject {
     
     /**
      setup swizzling for management of UIAlertController
      */
-    public static func registCuckooAlert() {
+    open static func registCuckooAlert() {
         setInstanceMethods(targetClass: UIViewController.self, source: #selector(UIViewController.viewDidLoad), target: #selector(UIViewController.someRemainsForOldViewDidLoad))
         setInstanceMethods(targetClass: UIViewController.self, source: #selector(UIViewController.newViewDidLoad), target: #selector(UIViewController.viewDidLoad))
         
-        setInstanceMethods(targetClass: UIViewController.self, source: #selector(UIViewController.presentViewController(_:animated:completion:)), target: #selector(UIViewController.oldPresentViewController(_:animated:completion:)))
-        setInstanceMethods(targetClass: UIViewController.self, source: #selector(UIViewController.newPresentViewController(_:animated:completion:)), target: #selector(UIViewController.presentViewController(_:animated:completion:)))
+        setInstanceMethods(targetClass: UIViewController.self, source: #selector(UIViewController.present(_:animated:completion:)), target: #selector(UIViewController.oldPresentViewController(_:animated:completion:)))
+        setInstanceMethods(targetClass: UIViewController.self, source: #selector(UIViewController.newPresentViewController(_:animated:completion:)), target: #selector(UIViewController.present(_:animated:completion:)))
     }
 }
 
@@ -43,19 +43,19 @@ struct UIAlertControllerQueue {
         guard let target = self.target else {
             return
         }
-        target.presentViewController(alert, animated: animated, completion: completion)
+        target.present(alert, animated: animated, completion: completion)
     }
 }
 
 // MARK: - UIAlertController: resume next alert controller on removing from parent view controller
 extension UIAlertController {
-    private static var alertQueue = [UIAlertControllerQueue]()
+    fileprivate static var alertQueue = [UIAlertControllerQueue]()
 //    private static let presentQueue = dispatch_queue_create("com.CuckooAlert.present", DISPATCH_QUEUE_SERIAL)
     
-    public override func viewDidDisappear(animated: Bool) {
+    open override func viewDidDisappear(_ animated: Bool) {
         print(#function)
         // isMovingFromParentViewController doesn't work
-        if nil == self.parentViewController {
+        if nil == self.parent {
             var alertQueueHaveTarget = UIAlertController.alertQueue.filter(){nil != $0.target}
             if let queue = alertQueueHaveTarget.popLast() {
                 queue.present()
@@ -66,8 +66,8 @@ extension UIAlertController {
     }
     
     public func show(parentViewController vc: UIViewController, animated: Bool = true, completion: (()->Void)? = nil) {
-        dispatch_async(dispatch_get_main_queue()) {
-            vc.presentViewController(self, animated: animated, completion: completion)
+        DispatchQueue.main.async {
+            vc.present(self, animated: animated, completion: completion)
         }
     }
 }
@@ -78,14 +78,14 @@ extension UIViewController {
     /**
      This is will be viewDidLoad like cuckoo
      */
-    @objc private func newViewDidLoad() {
+    @objc fileprivate func newViewDidLoad() {
         self.someRemainsForOldViewDidLoad()
     }
     
     /**
      changing with some codes in viewDidLoad
      */
-    @objc private func someRemainsForOldViewDidLoad() {
+    @objc fileprivate func someRemainsForOldViewDidLoad() {
         assertionFailure(#function)
     }
     
@@ -96,7 +96,7 @@ extension UIViewController {
      - parameter flag:
      - parameter completion:
      */
-    @objc public func newPresentViewController(viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
+    @objc public func newPresentViewController(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
         switch viewControllerToPresent {
         case let alert as UIAlertController where nil != self.presentedViewController:
             UIAlertController.alertQueue = [UIAlertControllerQueue(target: self, alert: alert)] + UIAlertController.alertQueue
@@ -107,7 +107,7 @@ extension UIViewController {
         self.oldPresentViewController(viewControllerToPresent, animated: flag, completion: completion)
     }
     
-    @objc public func oldPresentViewController(viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
+    @objc public func oldPresentViewController(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
         assertionFailure(#function)
     }
     
@@ -117,13 +117,13 @@ extension UIViewController {
      - parameter message:     prompt message
      - parameter autoclosing: time limit for removing prompt, 0 is infinite prompt
      */
-    public func prompt(message: String, autoclosing: NSTimeInterval = 0) {
+    public func prompt(_ message: String, autoclosing: TimeInterval = 0) {
         self.navigationItem.prompt = message
         if 0 < autoclosing {
             weak var weakNavigationItem: UINavigationItem? = self.navigationItem
             // minimum delay to 0.5 sec. more little value do not animation.
             let delay = max(0.5, autoclosing)
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {
                 weakNavigationItem?.prompt = nil
             })
         }

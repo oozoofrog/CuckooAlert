@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CuckooAlert'
-  s.version          = '1.0.1'
+  s.version          = '1.1.0'
   s.summary          = 'Extension for UIAlertController.'
 
 # This description is used to generate tags and improve search results.
@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/singcodes/CuckooAlert.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/KwanghoonChoi'
 
-  s.ios.deployment_target = '8.4'
+  s.ios.deployment_target = '9.0'
 
   s.source_files = 'CuckooAlert/**'
   
